@@ -3,7 +3,8 @@
 //Here are some Screenshots from my Project of Simple Calculator.....
 
 ## 𝑼𝑺𝑬𝑹 𝑰𝑵𝑻𝑬𝑹𝑭𝑨𝑪𝑬
- <img src="screenshots/image1.jpg" width = 250/> <img src="screenshots/image2.jpg" width = 250/>
+ <img src="screenshots/image1.jpg" width = 250/> <img src="screenshots/image2.jpg" width = 250/><img src="screenshots/image3.jpg" width = 250/>
+
 
 ## 𝑲𝒆𝒚 𝑷𝒐𝒊𝒏𝒕𝒔
 * Simple UI and Beautiful Colours.
