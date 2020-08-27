@@ -31,6 +31,18 @@
             android:text=""
             android:gravity="end|bottom" />
 
+        <TextView
+            android:id="@+id/operator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#dbe3e5"
+            android:gravity="start"
+            android:inputType="number"
+            android:padding="10dp"
+            android:text=""
+            android:textColor="#797a7e"
+            android:textSize="30sp" />
+
 
 
         <TextView
@@ -45,7 +57,7 @@
             android:padding="10dp"
             android:text=""
             android:textColor="#797a7e"
-            android:textSize="50sp" />
+            android:textSize="40sp" />
 
 
     </LinearLayout>
@@ -76,12 +88,12 @@
                 android:textSize="30sp" />
 
             <Button
-                android:id="@+id/pmbtnn"
+                android:id="@+id/multiplybtnn"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/gradient2"
-                android:text="±"
+                android:text="×"
                 android:textColor="#000000"
                 android:textSize="30sp" />
 
@@ -142,12 +154,12 @@
                 android:textSize="30sp" />
 
             <Button
-                android:id="@+id/multiplybtnn"
+                android:id="@+id/plusbtnn"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/color_gradient"
-                android:text="×"
+                android:text="+"
                 android:textColor="#000000"
                 android:textSize="30sp" />
 
@@ -237,14 +249,16 @@
                 android:textSize="30sp" />
 
             <Button
-                android:id="@+id/plusbtnn"
+                android:id="@+id/decimalbtnn"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/color_gradient"
-                android:text="+"
+                android:text="."
                 android:textColor="#000000"
                 android:textSize="30sp" />
+
+
 
         </LinearLayout>
 
@@ -253,32 +267,21 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/decimalbtnn"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:text="."
-                android:textSize="30sp"
-                android:layout_weight="1"
-                android:textColor="#FFFFFF"
-                android:background="#3f3f44" />
-
 
             <Button
                 android:id="@+id/zerobtnn"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
-                android:layout_weight="2"
+                android:layout_weight="3.5"
                 android:background="#3f3f44"
                 android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp" />
 
 
-
             <Button
                 android:id="@+id/equalbtnn"
-                android:layout_width="0dp"
+                android:layout_width="14dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/color_gradient"
