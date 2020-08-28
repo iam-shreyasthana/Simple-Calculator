@@ -187,8 +187,15 @@ public class MainActivity extends AppCompatActivity {
                 catch (NumberFormatException e){
                     text1.setText("");
                 }
-                process = op;
-                operate.setText(process);
+                if (op.equals("-")) {
+                    text1.append("-");
+                    if (process.equals("=")) {
+                        process = op;
+                    }
+                }else {
+                    process = op;
+                    operate.setText(op);
+                }
             }
         };
 
@@ -232,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "÷":
                     if(op2==0){
-                        op1 = 0.0;
+                        text2.setText("INFINITE");
                     }
                     else{
                         op1/=op2;
@@ -259,9 +266,16 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+        if(process=="-"){
+            op1*=(-1);
+        }
         text2.setText(op1.toString());
         text1.setText("");
     }
+
+    
+
+
 
 
     // Function for response to UI Change........Checking the in and out behaviour of thee user
@@ -284,8 +298,6 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
     }
-
-
 
 
 
