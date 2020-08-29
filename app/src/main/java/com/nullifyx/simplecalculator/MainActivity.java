@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Double op1 = null;
     private Double op2 = null;
     private String process = "=";
+    Double dv;
 
     //....Decimal Format Function.........
 
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         plusbtn = findViewById(R.id.plusbtnn);
         subbtn = findViewById(R.id.subbtnn);
         clearbtn = findViewById(R.id.clearbtnn);
+        pmbtn = findViewById(R.id.pmbtnn);
 
         decimalbtn = findViewById(R.id.decimalbtnn);
 
@@ -157,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         decimalbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                text1.setText((text1.getText() + "."));
+                text1.setText(text1.getText() + ".");
             }
         });
 
@@ -173,6 +175,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //........Negative Button Listener...........
+
+        pmbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String value = text1.getText().toString();
+                if(value.length() == 0){
+                    text1.setText("-");
+                }
+                else{
+                    try{
+                        Double dv = Double.valueOf(value);
+                        dv *= (-1);
+                        text1.setText(dv.toString());
+                    }catch(NumberFormatException e){
+                        // Since the text was "-" so we will clear it from the screen......
+
+                        text1.setText("");
+                    }
+                }
+            }
+        });
+
 
         View.OnClickListener opListener = new View.OnClickListener() {
             @Override
@@ -181,21 +206,14 @@ public class MainActivity extends AppCompatActivity {
                 String op = b.getText().toString();
                 String value = text1.getText().toString();
                 try{
-                    Double dv = Double.valueOf(value);
+                    dv = Double.valueOf(value);
                     performOperation(dv,op);
                 }
                 catch (NumberFormatException e){
                     text1.setText("");
                 }
-                if (op.equals("-")) {
-                    text1.append("-");
-                    if (process.equals("=")) {
-                        process = op;
-                    }
-                }else {
                     process = op;
                     operate.setText(op);
-                }
             }
         };
 
@@ -238,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                     op1 = op2;
                     break;
                 case "÷":
-                    if(op2==0){
+                    if(value==0){
                         text2.setText("INFINITE");
                     }
                     else{
@@ -247,13 +265,11 @@ public class MainActivity extends AppCompatActivity {
                         int decimalPlaces = process.length() - intPlaces - 1;
                         if(decimalPlaces<2)
                         {
-                            String res = df.format(op1).toString();
+                            String res = df.format(op1);
                             double result = Double.parseDouble(res);
                             op1 = result;
                         }
                     }
-
-
                     break;
                 case "×":
                     op1*=op2;
@@ -273,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
         text1.setText("");
     }
 
-    
+
 
 
 
