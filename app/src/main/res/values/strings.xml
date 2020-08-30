@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Simple Calculator</string>
+    <string name="simple_calculator">Simple Calculator</string>
+    <string name="by">by</string>
+    <string name="nullify_x">Nullify.X</string>
+    <string name="C">C</string>
+
 </resources>

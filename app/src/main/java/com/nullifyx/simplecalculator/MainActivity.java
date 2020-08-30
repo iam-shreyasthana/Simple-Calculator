@@ -12,7 +12,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,10 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private Button onebtn,twobtn,threebtn,fourbtn,fivebtn,sixbtn,sevenbtn,eightbtn,ninebtn,clearbtn;
     private Button pmbtn,dividebtn,multiplybtn,plusbtn,subbtn,equalbtn,decimalbtn,zerobtn;
     private ImageButton delbtn;
-    TextView text1,text2;
+    TextView text1,text2,operate;
+    private Double op1 = null;
+    private Double op2 = null;
+    private String process = "=";
+    Double dv;
 
-    public String ans="";
-    ArrayList <Integer> a = new ArrayList<Integer>();
+    //....Decimal Format Function.........
+
+    final DecimalFormat df = new DecimalFormat("0.00000");
 
 
     @Override
@@ -75,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         text1 = findViewById(R.id.smallres);
         text2 = findViewById(R.id.largeres);
+        operate = findViewById(R.id.operator);
 
 
 
@@ -82,14 +90,12 @@ public class MainActivity extends AppCompatActivity {
         zerobtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans+="1";
                 text1.setText(text1.getText() + "0");
             }
         });
         onebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans+="2";
                 text1.setText(text1.getText() + "1");
             }
         });
@@ -97,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         twobtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans+="2";
                 text1.setText(text1.getText() + "2");
             }
         });
@@ -105,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         threebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans+="3";
                 text1.setText(text1.getText() + "3");
             }
         });
@@ -113,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         fourbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans+="4";
                 text1.setText(text1.getText() + "4");
             }
         });
@@ -121,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         fivebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans+="5";
                 text1.setText(text1.getText() + "5");
             }
         });
@@ -129,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         sixbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans+="6";
                 text1.setText(text1.getText() + "6");
             }
         });
@@ -137,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
         sevenbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans+="7";
                 text1.setText(text1.getText() + "7");
             }
         });
@@ -145,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
         eightbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans+="8";
                 text1.setText(text1.getText() + "8");
             }
         });
@@ -153,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
         ninebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans+="9";
                 text1.setText(text1.getText() + "9");
             }
         });
@@ -161,107 +159,69 @@ public class MainActivity extends AppCompatActivity {
         decimalbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!text1.getText().toString().isEmpty()){
-                    String s = text1.getText().toString();
-                    char ch = s.charAt(s.length() - 1);
-                    if(ch!='+' && ch != '-' && ch!='%' && ch != '×' && ch != '÷'){
-                        ans+=".";
-                        text1.setText(text1.getText() + ".");
-                    }
-                }
+                text1.setText(text1.getText() + ".");
             }
         });
 
         clearbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ans ="";
                 text1.setText(null);
                 text2.setText(null);
-                a.clear();
+                operate.setText(null);
+                process="=";
+                op1 = null;
+                op2 = null;
             }
         });
+
+        //........Negative Button Listener...........
 
         pmbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String s = text1.getText().toString();
-                double res = Double.parseDouble(s + "");
-                res*=(-1);
-                ans= String.valueOf(res);
-                text1.setText(res + "");
+                String value = text1.getText().toString();
+                if(value.length() == 0){
+                    text1.setText("-");
+                }
+                else{
+                    try{
+                        dv = Double.valueOf(value);
+                        dv *= (-1);
+                        text1.setText(dv.toString());
+                    }catch(NumberFormatException e){
+                        // Since the text was "-" so we will clear it from the screen......
 
-            }
-        });
-
-
-
-
-        dividebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!text1.getText().toString().isEmpty())
-                {
-                    String s = text1.getText().toString();
-                    char ch=s.charAt(s.length()-1);
-                    if(ch!='+' && ch!='-' &&  ch!='×' && ch!='÷' && ch!='.') {
-                        a.add(s.length()-1);
-                        ans+="÷";
-                        text1.setText(text1.getText() + "÷");
+                        text1.setText("");
                     }
                 }
             }
         });
 
-        plusbtn.setOnClickListener(new View.OnClickListener() {
+
+        View.OnClickListener opListener = new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(!text1.getText().toString().isEmpty())
-                {
-                    String s = text1.getText().toString();
-                    char ch=s.charAt(s.length()-1);
-                    if(ch!='+' && ch!='-' &&  ch!='×' && ch!='÷' && ch!='.') {
-                        a.add(s.length()-1);
-                        ans+="+";
-                        text1.setText(text1.getText() + "+");
-                    }
+            public void onClick(View view) {
+                Button b = (Button) view;
+                String op = b.getText().toString();
+                String value = text1.getText().toString();
+                try{
+                    dv = Double.valueOf(value);
+                    performOperation(dv,op);
                 }
-            }
-        });
-
-        subbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!text1.getText().toString().isEmpty())
-                {
-                    String s = text1.getText().toString();
-                    char ch=s.charAt(s.length()-1);
-                    if(ch!='+' && ch!='-' &&  ch!='×' && ch!='÷' && ch!='.') {
-                        a.add(s.length()-1);
-                        ans+="-";
-                        text1.setText(text1.getText() + "-");
-                    }
+                catch (NumberFormatException e){
+                    text1.setText("");
                 }
+                    process = op;
+                    operate.setText(op);
             }
-        });
+        };
 
-        multiplybtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!text1.getText().toString().isEmpty())
-                {
-                    String s = text1.getText().toString();
-                    char ch=s.charAt(s.length()-1);
-                    if(ch!='+' && ch!='-' && ch!='×' && ch!='÷' && ch!='.') {
-                        a.add(s.length()-1);
-                        ans+="×";
-                        text1.setText(text1.getText() + "×");
-                    }
-
-
-                }
-            }
-        });
+        plusbtn.setOnClickListener(opListener);
+        subbtn.setOnClickListener(opListener);
+        multiplybtn.setOnClickListener(opListener);
+        dividebtn.setOnClickListener(opListener);
+        equalbtn.setOnClickListener(opListener);
 
         //.......BackSpace Function.....
 
@@ -270,85 +230,59 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!text1.getText().toString().isEmpty()) {
                     String s = text1.getText().toString();
-                    //ans=ans.substring(0,ans.length());
                     String s1 = "";
                     for (int i = 0; i < s.length() - 1; i++) {
                         s1 =s1 + s.charAt(i);
                     }
-                    //ans=ans.substring(0,s.length()-1);
-                    ans = s1;
                     text1.setText(s1);
                 }
             }
         });
 
-        equalbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!text1.getText().toString().isEmpty())
-                {
-                    String s = ans;
-                    char ch = s.charAt(s.length() - 1);
-                    if (ch == '+' || ch == '-' || ch == '×' || ch == '÷' || ch=='.')
-                    {
-                        Toast.makeText(getApplicationContext(), "Invalid", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        a.add(s.length()-1);
-                        s+= "=";
-                        //String info="";
+    }
 
-                        //boolean div=false,mult=false,sub=false,perc=false,add1=false;
+    private void performOperation(Double value, String operation){
+        if(op1 == null){
+            op1 = value;
+        }
+        else{
+            op2 = value;
 
-                        double res=Double.parseDouble(s.substring(0,a.get(0)+1));
-
-                        for(int i=0;i<a.size()-1;i++)
-                        {
-                            double answ = Double.parseDouble(s.substring(a.get(i)+2,a.get(i+1)+1));
-                            if(s.charAt(a.get(i)+1)=='+')
-                            {
-                                res+=answ;
-                            }
-                            else if(s.charAt(a.get(i)+1)=='-')
-                            {
-                                res-=answ;
-                            }
-                            else if(s.charAt(a.get(i)+1)=='÷')
-                            {
-                                res/=answ;
-                            }
-                            else if(s.charAt(a.get(i)+1)=='×')
-                            {
-                                res*=answ;
-                            }
-
-                        }
-
-                        String answer = String.valueOf(res);
-                        a.clear();
-
-
-                        //int check=0; //first time
-                        //String answ= String.valueOf(a.size());
-
-
-
-                        text2.setText(answer);
-                        //a.add(answer.length()-1);
-                        ans=answer;
-                    }
-
-
-                }
+            if(process.equals("=")){
+                process = operation;
             }
-        });
-
-
-
-
-
-
+            switch (process){
+                case "=" :
+                    op1 = op2;
+                    break;
+                case "÷":
+                    if(op2 == 0){
+                        text2.setText("0");
+                    }
+                    else{
+                        op1/=op2;
+                        int intPlaces = process.indexOf('.');
+                        int decimalPlaces = process.length() - intPlaces - 1;
+                        if(decimalPlaces<2)
+                        {
+                            String res = df.format(op1);
+                            op1 = Double.parseDouble(res);
+                        }
+                    }
+                    break;
+                case "×":
+                    op1*=op2;
+                    break;
+                case "+":
+                    op1+=op2;
+                    break;
+                case "-":
+                    op1-=op2;
+                    break;
+            }
+        }
+        text2.setText(op1.toString());
+        text1.setText("");
     }
 
     // Function for response to UI Change........Checking the in and out behaviour of thee user
@@ -371,8 +305,6 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
     }
-
-
 
 
 
