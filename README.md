@@ -11,3 +11,5 @@
 * This Project just a way of entering into the world of Android Development.
 * Many new Android Developers are emerging everyday, they start from a "Hello World" App Program and then they seek to look out for projects to work on.
 * Starting with a Calculator App is the best way to enter into the WORLD of ANDROID PROGRAMMING.
+* Added a "Splash Screen" at The Initial Activity....
+NOTE - I have not used the Google's Directed Method for the Splash Screen. Try to Use that in your Work.
